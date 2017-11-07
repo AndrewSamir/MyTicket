@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">My Ticket</string>
+    <string name="action_settings">Settings</string>
+    <string name="connection_error">حدث خطأ فى الاتصال الانترنت</string>
+    <string name="firebase_services">services</string>
+    <string name="firebase_serviceDetails">serviceDetails</string>
+    <string name="firebase_events">events</string>
+    <string name="firebase_eventDetails">eventDetails</string>
+    <string name="firebase_times">times</string>
+    <string name="cancel">إلغاء</string>
+</resources>
