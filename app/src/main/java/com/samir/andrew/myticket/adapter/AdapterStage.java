@@ -2,6 +2,7 @@ package com.samir.andrew.myticket.adapter;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,10 @@ import com.samir.andrew.myticket.models.ModelChair;
 import com.samir.andrew.myticket.utlities.DataEnum;
 import com.samir.andrew.myticket.utlities.HandleGetDataFromFirebase;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import me.grantland.widget.AutofitHelper;
 
 /**
  * Created by lenovo on 5/3/2016.
@@ -42,10 +46,31 @@ public class AdapterStage extends RecyclerView.Adapter<AdapterStage.ViewHolder> 
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
         holder.tvRvItemStageChairKey.setText(data.get(position).getChairKey());
-        if (data.get(position).getState() == 1)
-            holder.tvRvItemStageChairKey.setBackgroundColor(Color.parseColor("#000000"));
+        AutofitHelper.create(holder.tvRvItemStageChairKey);
+        /*
+        states
+        0 -> empty
+        1 -> reserved
+        2 -> not confirmed
+        3 -> to reserve
+         */
+        if (data.get(position).getState() == 0) {
+            holder.tvRvItemStageChairKey.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorEmpty));
+            holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#000000"));
+        } else if (data.get(position).getState() == 1) {
+            holder.tvRvItemStageChairKey.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorReserved));
+            holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#FFFFFF"));
+        } else if (data.get(position).getState() == 2) {
+            holder.tvRvItemStageChairKey.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorNotConfirmed));
+            holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#000000"));
+        } else if (data.get(position).getState() == 4) {//should be equal auth.
+            holder.tvRvItemStageChairKey.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorMyReservation));
+            holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#000000"));
+        } else if (data.get(position).getState() == 3) {
+            holder.tvRvItemStageChairKey.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorToReserve));
+            holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#000000"));
+        }
     }
-
 
     @Override
     public int getItemCount() {
@@ -83,6 +108,19 @@ public class AdapterStage extends RecyclerView.Adapter<AdapterStage.ViewHolder> 
         notifyItemRangeInserted(startIndex, items.size());
     }
 
+    public List<ModelChair> getReservedChairs() {
+
+        List<ModelChair> toReserveChairs = new ArrayList<>();
+
+        for (ModelChair chair : data) {
+
+            if (chair.getState() == 4)
+                toReserveChairs.add(chair);
+        }
+
+        return toReserveChairs;
+
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -100,6 +138,14 @@ public class AdapterStage extends RecyclerView.Adapter<AdapterStage.ViewHolder> 
         @Override
         public void onClick(View v) {
 
+            ModelChair chair = data.get(getAdapterPosition());
+            if (chair.getState() == 0) {
+                chair.setState(4);
+                notifyItemChanged(getAdapterPosition());
+            } else if (chair.getState() == 4) {
+                chair.setState(0);
+                notifyItemChanged(getAdapterPosition());
+            }
 
         }
 

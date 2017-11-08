@@ -14,6 +14,7 @@ import com.samir.andrew.myticket.adapter.AdapterClientEvents;
 import com.samir.andrew.myticket.interfaces.InterfaceDailogClicked;
 import com.samir.andrew.myticket.interfaces.InterfaceGetDataFromFirebase;
 import com.samir.andrew.myticket.models.ModelEventDetails;
+import com.samir.andrew.myticket.singleton.SingletonData;
 import com.samir.andrew.myticket.utlities.DataEnum;
 import com.samir.andrew.myticket.utlities.HandleGetDataFromFirebase;
 import com.samir.andrew.myticket.utlities.HelpMe;
@@ -45,8 +46,7 @@ public class Events extends AppCompatActivity implements InterfaceGetDataFromFir
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Intent intent = getIntent();
-        serviceId = intent.getStringExtra(DataEnum.intentServiceId.name());
+        serviceId = SingletonData.getInstance().getServiceId();
         modelEventDetailsList = new ArrayList<>();
         ButterKnife.bind(this);
         HandleGetDataFromFirebase.getInstance(this).setGetDataFromFirebaseInterface(this);
@@ -88,11 +88,12 @@ public class Events extends AppCompatActivity implements InterfaceGetDataFromFir
     @Override
     public void onClickDialog(String name, String flag, String eventName, String serviceId, int chairsInRow) {
 
+        SingletonData.getInstance().setServiceId(serviceId);
+        SingletonData.getInstance().setEventName(eventName);
+        SingletonData.getInstance().setEventTime(name);
+        SingletonData.getInstance().setChairsInRow(chairsInRow);
+
         Intent intent = new Intent(Events.this, Stage.class);
-        intent.putExtra(DataEnum.intentServiceId.name(), serviceId);
-        intent.putExtra(DataEnum.intentEventName.name(), eventName);
-        intent.putExtra(DataEnum.intentTime.name(), name);
-        intent.putExtra(DataEnum.intentChairsInRow.name(), chairsInRow);
         startActivity(intent);
     }
 }

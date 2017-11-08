@@ -17,6 +17,7 @@ import com.samir.andrew.myticket.adapter.AdapterStage;
 import com.samir.andrew.myticket.interfaces.InterfaceGetDataFromFirebase;
 import com.samir.andrew.myticket.models.ModelChair;
 import com.samir.andrew.myticket.models.ModelEventDetails;
+import com.samir.andrew.myticket.singleton.SingletonData;
 import com.samir.andrew.myticket.utlities.DataEnum;
 import com.samir.andrew.myticket.utlities.HandleGetDataFromFirebase;
 import com.samir.andrew.myticket.utlities.HelpMe;
@@ -50,10 +51,10 @@ public class Stage extends AppCompatActivity implements InterfaceGetDataFromFire
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        serviceId = intent.getStringExtra(DataEnum.intentServiceId.name());
-        eventName = intent.getStringExtra(DataEnum.intentEventName.name());
-        time = intent.getStringExtra(DataEnum.intentTime.name());
-        chairsInRow = intent.getIntExtra(DataEnum.intentChairsInRow.name(), 1);
+        serviceId = SingletonData.getInstance().getServiceId();
+        eventName = SingletonData.getInstance().getEventName();
+        time = SingletonData.getInstance().getEventTime();
+        chairsInRow = SingletonData.getInstance().getChairsInRow();
 
         modelChairList = new ArrayList<>();
         ButterKnife.bind(this);

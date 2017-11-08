@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="colorReserved">#F44336</color>
+    <color name="colorMyReservation">#8BC34A</color>
+    <color name="colorEmpty">#C5E1A5</color>
+    <color name="colorNotConfirmed">#FFEB3B</color>
+    <color name="colorToReserve">#00BCD4</color>
+
 </resources>

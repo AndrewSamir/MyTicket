@@ -6,10 +6,20 @@ package com.samir.andrew.myticket.models;
 
 public class ModelChair {
 
-    public String church, mail, mobile, name, paymentMethod, chairKey;
+    public String church, mail, mobile, name, paymentMethod, chairKey, reservedBy;
     int state;
 
     public ModelChair() {
+
+        reservedBy = "e";
+    }
+
+    public String getReservedBy() {
+        return reservedBy;
+    }
+
+    public void setReservedBy(String reservedBy) {
+        this.reservedBy = reservedBy;
     }
 
     public String getChairKey() {

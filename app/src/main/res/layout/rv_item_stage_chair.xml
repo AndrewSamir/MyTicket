@@ -8,9 +8,12 @@
         android:id="@+id/tvRvItemStageChairKey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_5sdp"
+        android:layout_margin="@dimen/_2sdp"
         android:background="#FFF000"
         android:gravity="center"
-        android:padding="@dimen/_7sdp" />
+        android:lines="1"
+        android:padding="@dimen/_2sdp"
+        android:text="A02"
+        android:textSize="@dimen/_30sdp" />
 
 </LinearLayout>

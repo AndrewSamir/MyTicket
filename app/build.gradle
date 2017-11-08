@@ -1,11 +1,26 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.samir.andrew.myticket"
-        minSdkVersion 17
+        minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -50,7 +65,13 @@ dependencies {
     compile 'com.pacioianu.david:ink-page-indicator:1.2.0'
     compile 'com.github.kickstartinteractiveandroidteam:KsiProjectMate:v1.1'
     compile 'com.afollestad.material-dialogs:core:0.9.4.1'
+
+    compile 'me.grantland:autofittextview:0.2.+'
+
     testCompile 'junit:junit:4.12'
+    compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
+        transitive = true;
+    }
 }
 
 

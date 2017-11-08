@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.samir.andrew.myticket.R;
 import com.samir.andrew.myticket.models.ModelServiceDetails;
+import com.samir.andrew.myticket.singleton.SingletonData;
 import com.samir.andrew.myticket.utlities.DataEnum;
 import com.samir.andrew.myticket.views.activity.Events;
 
@@ -100,10 +101,8 @@ public class AdapterClientAllServices extends RecyclerView.Adapter<AdapterClient
         @Override
         public void onClick(View v) {
 
+            SingletonData.getInstance().setServiceId(data.get(getAdapterPosition()).getKey());
             Intent goToServiceDetails = new Intent(mContext, Events.class);
-            goToServiceDetails.putExtra(DataEnum.intentServiceId.name(), data.get(getAdapterPosition()).getKey());
-
-
             mContext.startActivity(goToServiceDetails);
 
         }
