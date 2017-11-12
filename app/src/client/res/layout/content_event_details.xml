@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="?attr/actionBarSize"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.samir.andrew.myticket.views.activity.EventDetails"
+    tools:showIn="@layout/activity_event_details">
+
+    <ImageView
+        android:id="@+id/imgEventDetails"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_135sdp"
+        android:layout_marginBottom="@dimen/default_margin_bottom"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_launcher"
+        android:transitionName="@string/shared_event_details_image" />
+
+    <TextView
+        android:id="@+id/tvEventDetailsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:padding="@dimen/default_padding"
+        android:text="event name"
+        android:textColor="#000000"
+        android:textSize="@dimen/textSize"
+        android:textStyle="bold"
+        android:transitionName="@string/shared_event_details_title" />
+
+    <TextView
+        android:id="@+id/tvEventDetailsDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/default_padding"
+        android:textSize="@dimen/textSize"
+        android:textStyle="italic" />
+
+</LinearLayout>

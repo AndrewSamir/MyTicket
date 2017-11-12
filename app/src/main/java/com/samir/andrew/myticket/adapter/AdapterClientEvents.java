@@ -1,7 +1,14 @@
 package com.samir.andrew.myticket.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.samir.andrew.myticket.R;
-import com.samir.andrew.myticket.interfaces.InterfaceDailogClicked;
 import com.samir.andrew.myticket.models.ModelEventDetails;
-import com.samir.andrew.myticket.models.ModelServiceDetails;
-import com.samir.andrew.myticket.utlities.DataEnum;
-import com.samir.andrew.myticket.utlities.HandleGetDataFromFirebase;
-import com.sdsmdg.tastytoast.TastyToast;
+import com.samir.andrew.myticket.singleton.SingletonData;
+import com.samir.andrew.myticket.views.activity.EventDetails;
 
 import java.util.List;
 
@@ -36,14 +40,15 @@ public class AdapterClientEvents extends RecyclerView.Adapter<AdapterClientEvent
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_item_services, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_item_event, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        holder.tvRvItemServicesTitle.setText(data.get(position).getEventName());
+        holder.tvRvItemEvent.setText(data.get(position).getEventName());
+        holder.imgRvItemEvent.setImageBitmap(StringToBitMap(data.get(position).eventImage));
     }
 
 
@@ -86,14 +91,14 @@ public class AdapterClientEvents extends RecyclerView.Adapter<AdapterClientEvent
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView tvRvItemServicesTitle;
-        ImageView imgRvItemServices;
+        TextView tvRvItemEvent;
+        com.joooonho.SelectableRoundedImageView imgRvItemEvent;
 
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            imgRvItemServices = (ImageView) itemView.findViewById(R.id.imgRvItemServices);
-            tvRvItemServicesTitle = (TextView) itemView.findViewById(R.id.tvRvItemServicesTitle);
+            imgRvItemEvent = (com.joooonho.SelectableRoundedImageView) itemView.findViewById(R.id.imgRvItemEvent);
+            tvRvItemEvent = (TextView) itemView.findViewById(R.id.tvRvItemEvent);
 
             itemView.setOnClickListener(this);
 
@@ -102,14 +107,39 @@ public class AdapterClientEvents extends RecyclerView.Adapter<AdapterClientEvent
         @Override
         public void onClick(View v) {
 
-            ModelEventDetails modelEventDetails = data.get(getAdapterPosition());
-            HandleGetDataFromFirebase.getInstance(mContext).callGetEventTimes(DataEnum.callGetEventTimes.name(),
-                    modelEventDetails.getServiceId(),
-                    modelEventDetails.getEventName()
-            ,modelEventDetails.getChairsInRow());
+
+            SingletonData.getInstance().setEventName(data.get(getAdapterPosition()).getEventName());
+            SingletonData.getInstance().setEventImage(data.get(getAdapterPosition()).getEventImage());
+            SingletonData.getInstance().setEventDescription(data.get(getAdapterPosition()).getEventDesciption());
+            SingletonData.getInstance().setChairsInRow(data.get(getAdapterPosition()).getChairsInRow());
+
+
+            Intent intent = new Intent(mContext, EventDetails.class);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                Pair<View, String> pair1 = Pair.create((View) imgRvItemEvent, mContext.getString(R.string.shared_event_details_image));
+                Pair<View, String> pair2 = Pair.create((View) tvRvItemEvent, mContext.getString(R.string.shared_event_details_title));
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation(mContext, pair1, pair2);
+                mContext.startActivity(intent, options.toBundle());
+            } else {
+                mContext.startActivity(intent);
+            }
 
         }
 
 
     }
+
+    public Bitmap StringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+
 }

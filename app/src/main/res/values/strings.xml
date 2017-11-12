@@ -8,4 +8,7 @@
     <string name="firebase_eventDetails">eventDetails</string>
     <string name="firebase_times">times</string>
     <string name="cancel">إلغاء</string>
+    <string name="shared_event_details_image">sharedImageEventDetails</string>
+    <string name="shared_event_details_title">sharedTitleEventDetails</string>
+    <string name="reserve_your_ticket_now">أحجز تذكرتك الآن</string>
 </resources>

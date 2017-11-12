@@ -57,7 +57,7 @@ public class HandleGetDataFromFirebase {
     }
 
     public void callGetAllServices(final String flag) {
-        final Dialog progressDialog = new ProgressDialog(context, IndicatorStyle.BallBeat).show();
+        final Dialog progressDialog = new ProgressDialog(context, IndicatorStyle.BallZigZag).show();
         progressDialog.show();
         if (true) {
             DatabaseReference myRefJobs = myRef.child(context.getString(R.string.firebase_services));

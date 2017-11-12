@@ -4,11 +4,23 @@
     <application>
         <activity
             android:name="com.samir.andrew.myticket.views.activity.Home"
-            android:label="@string/title_activity_home"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name="com.samir.andrew.myticket.views.activity.Stage"
+            android:parentActivityName="com.samir.andrew.myticket.views.activity.Events"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.samir.andrew.myticket.views.activity.Events" />
+        </activity>
+        <activity
+            android:name="com.samir.andrew.myticket.views.activity.Login"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.samir.andrew.myticket.views.activity.Events"
-            android:label="@string/title_activity_events"
+            android:name="com.samir.andrew.myticket.views.activity.ServiceDetails"
             android:parentActivityName="com.samir.andrew.myticket.views.activity.Home"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -16,13 +28,12 @@
                 android:value="com.samir.andrew.myticket.views.activity.Home" />
         </activity>
         <activity
-            android:name="com.samir.andrew.myticket.views.activity.Stage"
-            android:label="@string/title_activity_stage"
-            android:parentActivityName="com.samir.andrew.myticket.views.activity.Events"
+            android:name="com.samir.andrew.myticket.views.activity.EventDetails"
+            android:parentActivityName="com.samir.andrew.myticket.views.activity.ServiceDetails"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.samir.andrew.myticket.views.activity.Events" />
+                android:value="com.samir.andrew.myticket.views.activity.ServiceDetails" />
         </activity>
     </application>
 

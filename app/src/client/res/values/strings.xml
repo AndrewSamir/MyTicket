@@ -2,4 +2,8 @@
     <string name="title_activity_home">Home</string>
     <string name="title_activity_events">Events</string>
     <string name="title_activity_stage">Stage</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_service_details">ServiceDetails</string>
+    <string name="title_activity_event_details">EventDetails</string>
+    <string name="action_settings">Settings</string>
 </resources>

@@ -3,7 +3,10 @@ package com.samir.andrew.myticket.adapter;
 import android.app.Activity;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +15,10 @@ import android.widget.TextView;
 
 import com.samir.andrew.myticket.R;
 import com.samir.andrew.myticket.models.ModelChair;
+import com.samir.andrew.myticket.singleton.SingletonData;
 import com.samir.andrew.myticket.utlities.DataEnum;
 import com.samir.andrew.myticket.utlities.HandleGetDataFromFirebase;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +34,14 @@ public class AdapterStage extends RecyclerView.Adapter<AdapterStage.ViewHolder> 
     public List<ModelChair> data;
     private Activity mContext;
 
+    int width;
 
     public AdapterStage(List<ModelChair> data, Activity mContext) {
         this.data = data;
         this.mContext = mContext;
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        mContext.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        width = displayMetrics.widthPixels;
     }
 
 
@@ -54,20 +63,25 @@ public class AdapterStage extends RecyclerView.Adapter<AdapterStage.ViewHolder> 
         2 -> not confirmed
         3 -> to reserve
          */
+
+
+        holder.cardRvItemStageChair.getLayoutParams().height = width / SingletonData.getInstance().getChairsInRow();
+
+
         if (data.get(position).getState() == 0) {
-            holder.tvRvItemStageChairKey.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorEmpty));
+            holder.cardRvItemStageChair.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorEmpty));
             holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#000000"));
         } else if (data.get(position).getState() == 1) {
-            holder.tvRvItemStageChairKey.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorReserved));
+            holder.cardRvItemStageChair.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorReserved));
             holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#FFFFFF"));
         } else if (data.get(position).getState() == 2) {
-            holder.tvRvItemStageChairKey.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorNotConfirmed));
+            holder.cardRvItemStageChair.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorNotConfirmed));
             holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#000000"));
         } else if (data.get(position).getState() == 4) {//should be equal auth.
-            holder.tvRvItemStageChairKey.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorMyReservation));
+            holder.cardRvItemStageChair.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorMyReservation));
             holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#000000"));
         } else if (data.get(position).getState() == 3) {
-            holder.tvRvItemStageChairKey.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorToReserve));
+            holder.cardRvItemStageChair.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorToReserve));
             holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#000000"));
         }
     }
@@ -125,13 +139,15 @@ public class AdapterStage extends RecyclerView.Adapter<AdapterStage.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tvRvItemStageChairKey;
+        CardView cardRvItemStageChair;
 
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             tvRvItemStageChairKey = (TextView) itemView.findViewById(R.id.tvRvItemStageChairKey);
-
+            cardRvItemStageChair = (CardView) itemView.findViewById(R.id.cardRvItemStageChair);
             itemView.setOnClickListener(this);
+
 
         }
 

@@ -2,7 +2,13 @@ package com.samir.andrew.myticket.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +18,7 @@ import android.widget.TextView;
 import com.samir.andrew.myticket.R;
 import com.samir.andrew.myticket.models.ModelServiceDetails;
 import com.samir.andrew.myticket.singleton.SingletonData;
-import com.samir.andrew.myticket.utlities.DataEnum;
-import com.samir.andrew.myticket.views.activity.Events;
+import com.samir.andrew.myticket.views.activity.ServiceDetails;
 
 import java.util.List;
 
@@ -43,6 +48,7 @@ public class AdapterClientAllServices extends RecyclerView.Adapter<AdapterClient
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
         holder.tvRvItemServicesTitle.setText(data.get(position).getServiceName());
+        holder.imgRvItemServices.setImageBitmap(StringToBitMap(data.get(position).getServiceImage()));
     }
 
 
@@ -82,7 +88,6 @@ public class AdapterClientAllServices extends RecyclerView.Adapter<AdapterClient
         notifyItemRangeInserted(startIndex, items.size());
     }
 
-
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tvRvItemServicesTitle;
@@ -102,11 +107,35 @@ public class AdapterClientAllServices extends RecyclerView.Adapter<AdapterClient
         public void onClick(View v) {
 
             SingletonData.getInstance().setServiceId(data.get(getAdapterPosition()).getKey());
-            Intent goToServiceDetails = new Intent(mContext, Events.class);
-            mContext.startActivity(goToServiceDetails);
+            SingletonData.getInstance().setServiceImage(data.get(getAdapterPosition()).getServiceImage());
+            SingletonData.getInstance().setServiceName(data.get(getAdapterPosition()).getServiceName());
+            SingletonData.getInstance().setServiceDescription(data.get(getAdapterPosition()).getServiceDescription());
+
+            Intent intent = new Intent(mContext, ServiceDetails.class);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                Pair<View, String> pair1 = Pair.create((View) imgRvItemServices, "profile");
+                Pair<View, String> pair2 = Pair.create((View) tvRvItemServicesTitle, "text");
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation(mContext, pair1, pair2);
+                mContext.startActivity(intent, options.toBundle());
+            } else {
+                mContext.startActivity(intent);
+            }
 
         }
 
 
+    }
+
+    public Bitmap StringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 }

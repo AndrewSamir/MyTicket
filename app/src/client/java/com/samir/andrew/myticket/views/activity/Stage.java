@@ -9,6 +9,11 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.TranslateAnimation;
 
 import com.google.firebase.database.DataSnapshot;
 import com.samir.andrew.myticket.R;
@@ -49,8 +54,15 @@ public class Stage extends AppCompatActivity implements InterfaceGetDataFromFire
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setTitle(SingletonData.getInstance().getEventName());
 
-        Intent intent = getIntent();
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         serviceId = SingletonData.getInstance().getServiceId();
         eventName = SingletonData.getInstance().getEventName();
         time = SingletonData.getInstance().getEventTime();
@@ -61,8 +73,6 @@ public class Stage extends AppCompatActivity implements InterfaceGetDataFromFire
         HandleGetDataFromFirebase.getInstance(this).setGetDataFromFirebaseInterface(this);
         HandleGetDataFromFirebase.getInstance(this).callGetStageChairs(DataEnum.callGetStageChairs.name(),
                 serviceId, eventName, time);
-
-
     }
 
     @Override
@@ -80,12 +90,35 @@ public class Stage extends AppCompatActivity implements InterfaceGetDataFromFire
             mLayoutManager = new GridLayoutManager(this, chairsInRow);
 
             rvClientStage.setLayoutManager(mLayoutManager);
+            rvClientStage.setHasFixedSize(true);
+
+            AnimationSet set = new AnimationSet(true);
+
+        /*    Animation animation = new TranslateAnimation(0, 0, 1400, 0);
+            animation.setDuration(1000);
+            set.addAnimation(animation);
+*/
+
+            Animation animation = new AlphaAnimation(0.0f, 1.0f);
+            animation.setDuration(100);
+            set.addAnimation(animation);
+
+            animation = new TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f
+            );
+            animation.setDuration(100);
+            set.addAnimation(animation);
+
+            LayoutAnimationController controller = new LayoutAnimationController(set, 0.5f);
+
+            // adapter = new RecycleViewAdapter(poetNameSetGets, this);
 
             adapterStage = new AdapterStage(modelChairList, this);
             rvClientStage.setAdapter(adapterStage);
 
+            rvClientStage.setLayoutAnimation(controller);
+
         }
-
-
     }
 }

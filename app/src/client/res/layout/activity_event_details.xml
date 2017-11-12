@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.samir.andrew.myticket.views.activity.Events">
+    tools:context="com.samir.andrew.myticket.views.activity.EventDetails">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,7 +20,18 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_events" />
 
+    <include layout="@layout/content_event_details" />
+
+    <Button
+        android:id="@+id/btnEventDetailsReserveYourTicketNow"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="bottom"
+        android:background="@color/colorAccent"
+        android:text="@string/reserve_your_ticket_now"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/textSize"
+        android:textStyle="italic|bold" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -8,7 +8,7 @@ public class SingletonData {
 
     private static SingletonData mInstance = null;
 
-    private String serviceId, eventName, eventTime;
+    private String serviceId, eventName, eventTime, serviceImage, eventImage, serviceName, serviceDescription,eventDescription;
     private int chairsInRow;
 
     private SingletonData() {
@@ -27,6 +27,46 @@ public class SingletonData {
 
     public static void setmInstance(SingletonData mInstance) {
         SingletonData.mInstance = mInstance;
+    }
+
+    public String getEventDescription() {
+        return eventDescription;
+    }
+
+    public void setEventDescription(String eventDescription) {
+        this.eventDescription = eventDescription;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public String getServiceDescription() {
+        return serviceDescription;
+    }
+
+    public void setServiceDescription(String serviceDescription) {
+        this.serviceDescription = serviceDescription;
+    }
+
+    public String getServiceImage() {
+        return serviceImage;
+    }
+
+    public void setServiceImage(String serviceImage) {
+        this.serviceImage = serviceImage;
+    }
+
+    public String getEventImage() {
+        return eventImage;
+    }
+
+    public void setEventImage(String eventImage) {
+        this.eventImage = eventImage;
     }
 
     public String getServiceId() {
