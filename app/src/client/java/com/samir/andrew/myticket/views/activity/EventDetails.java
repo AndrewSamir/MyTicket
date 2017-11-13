@@ -1,5 +1,6 @@
 package com.samir.andrew.myticket.views.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,8 +23,12 @@ import com.samir.andrew.myticket.utlities.HandleGetDataFromFirebase;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import developer.mokadim.projectmate.dialog.IndicatorStyle;
+import developer.mokadim.projectmate.dialog.ProgressDialog;
 
 public class EventDetails extends AppCompatActivity implements InterfaceDailogClicked {
+
+    Dialog progressDialog;
 
     @OnClick(R.id.btnEventDetailsReserveYourTicketNow)
     public void onClickbtnEventDetailsReserveYourTicketNow() {
@@ -65,11 +70,13 @@ public class EventDetails extends AppCompatActivity implements InterfaceDailogCl
         tvEventDetailsTitle.setText(SingletonData.getInstance().getEventName());
         tvEventDetailsDescription.setText(SingletonData.getInstance().getEventDescription());
 
+        progressDialog = new ProgressDialog(this, IndicatorStyle.BallZigZag).show();
     }
 
     @Override
     public void onClickDialog(String name, String flag, String eventName, String serviceId, int chairsInRow) {
 
+        progressDialog.show();
         SingletonData.getInstance().setEventName(eventName);
         SingletonData.getInstance().setEventTime(name);
         SingletonData.getInstance().setChairsInRow(chairsInRow);
@@ -89,4 +96,9 @@ public class EventDetails extends AppCompatActivity implements InterfaceDailogCl
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        progressDialog.dismiss();
+    }
 }

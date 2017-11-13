@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.view.animation.TranslateAnimation;
 
@@ -32,6 +33,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class Stage extends AppCompatActivity implements InterfaceGetDataFromFirebase {
@@ -39,13 +41,25 @@ public class Stage extends AppCompatActivity implements InterfaceGetDataFromFire
     String serviceId, eventName, time;
     int chairsInRow;
 
-    @Bind(R.id.rvClientStage)
-    RecyclerView rvClientStage;
-
     private AdapterStage adapterStage;
     private RecyclerView.LayoutManager mLayoutManager;
 
     List<ModelChair> modelChairList;
+
+    @Bind(R.id.rvClientStage)
+    RecyclerView rvClientStage;
+
+    @Bind(R.id.tvStage)
+    View tvStage;
+
+    @OnClick(R.id.btnReserveNow)
+    public void onClickbtnReserveNow() {
+        // TODO submit data to server...
+    }
+
+    @Bind(R.id.btnReserveNow)
+    View btnReserveNow;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +84,10 @@ public class Stage extends AppCompatActivity implements InterfaceGetDataFromFire
 
         modelChairList = new ArrayList<>();
         ButterKnife.bind(this);
+        rvClientStage.setNestedScrollingEnabled(false);
+
+        startAnimation(0, 0, -400, 0, tvStage, 3000);
+
         HandleGetDataFromFirebase.getInstance(this).setGetDataFromFirebaseInterface(this);
         HandleGetDataFromFirebase.getInstance(this).callGetStageChairs(DataEnum.callGetStageChairs.name(),
                 serviceId, eventName, time);
@@ -118,7 +136,17 @@ public class Stage extends AppCompatActivity implements InterfaceGetDataFromFire
             rvClientStage.setAdapter(adapterStage);
 
             rvClientStage.setLayoutAnimation(controller);
+            startAnimation(0, 0, 400, 0, btnReserveNow, 3000);
 
         }
+    }
+
+    private void startAnimation(int fromXDelta, int toXDelta, int fromYDelta, int toYDelta, View view, int duration) {
+        AnimationSet set = new AnimationSet(true);
+        Animation animation = new TranslateAnimation(fromXDelta, toXDelta, fromYDelta, toYDelta);
+        animation.setDuration(duration);
+        set.addAnimation(animation);
+        view.setAnimation(animation);
+
     }
 }

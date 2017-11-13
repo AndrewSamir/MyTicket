@@ -11,4 +11,6 @@
     <string name="shared_event_details_image">sharedImageEventDetails</string>
     <string name="shared_event_details_title">sharedTitleEventDetails</string>
     <string name="reserve_your_ticket_now">أحجز تذكرتك الآن</string>
+    <string name="the_stage">المسرح</string>
+    <string name="reserve_now">أحجز الآن</string>
 </resources>

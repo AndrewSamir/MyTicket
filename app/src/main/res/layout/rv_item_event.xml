@@ -28,7 +28,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/_135sdp"
-            android:background="@drawable/rv_item_event_card_image_background"
+            android:background="@drawable/stage_background"
             android:scaleType="centerCrop"
             android:src="#000"
             android:visibility="gone" />
