@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/default_padding"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.samir.andrew.myticket.views.activity.Reservation"
+    tools:showIn="@layout/activity_reservation">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvReservationEventName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:text="حب حب"
+            android:textColor="#000"
+            android:textSize="@dimen/largeTextSize"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_medium"
+            android:layoutDirection="rtl"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/default_padding"
+                android:text="عدد التذاكر :"
+                android:textColor="#000"
+                android:textSize="@dimen/textSize" />
+
+            <TextView
+                android:id="@+id/tvREservationNumberOfTickets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textColor="#000"
+                android:textSize="@dimen/textSize" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_medium"
+            android:layoutDirection="rtl"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/default_padding"
+                android:text="سعر التذكره :"
+                android:textColor="#000"
+                android:textSize="@dimen/textSize" />
+
+            <TextView
+                android:id="@+id/tvREservationTicketPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textColor="#000"
+                android:textSize="@dimen/textSize" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layoutDirection="rtl"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_large"
+                android:paddingLeft="@dimen/default_padding"
+                android:text="السعر الاجمالى :"
+                android:textColor="#000"
+                android:textSize="@dimen/textSize" />
+
+            <TextView
+                android:id="@+id/tvReservationTotalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_large"
+                android:text="2"
+                android:textColor="#000"
+                android:textSize="@dimen/textSize" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_medium"
+            android:text="أختر طريقة الدفع"
+            android:textSize="@dimen/textSize"
+            android:textStyle="italic" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <ImageView
+                android:id="@+id/imgReservationCash"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:alpha="0.5"
+                android:padding="@dimen/_9sdp"
+                android:src="@drawable/cash" />
+
+            <ImageView
+                android:id="@+id/imgReservationOrangeMoney"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:alpha="0.5"
+                android:padding="@dimen/_9sdp"
+                android:scaleType="fitXY"
+                android:src="@drawable/orange_money" />
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</ScrollView>

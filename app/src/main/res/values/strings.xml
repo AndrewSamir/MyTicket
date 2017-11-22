@@ -13,4 +13,17 @@
     <string name="reserve_your_ticket_now">أحجز تذكرتك الآن</string>
     <string name="the_stage">المسرح</string>
     <string name="reserve_now">أحجز الآن</string>
+    <string name="church">Church</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="birthdate">Birthdate</string>
+    <string name="save">Save</string>
+    <string name="phone_number_hint">رقم الهاتف</string>
+    <string name="invalid_phone_number">أدخل رقم هاتف صحيح</string>
+    <string name="phone_number">رقم الهاتف</string>
+    <string name="enter_code">أدخل الكود هنا</string>
+    <string name="reservation_canceled">تم إلغاء الحجز</string>
+    <string name="reservation_confirmed">تم تأكيد الحجز</string>
+    <string name="reservstion_not_confirmed_yet">لم يتم تأكيد الحجز</string>
+
 </resources>

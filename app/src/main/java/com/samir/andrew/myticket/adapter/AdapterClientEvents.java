@@ -112,6 +112,8 @@ public class AdapterClientEvents extends RecyclerView.Adapter<AdapterClientEvent
             SingletonData.getInstance().setEventImage(data.get(getAdapterPosition()).getEventImage());
             SingletonData.getInstance().setEventDescription(data.get(getAdapterPosition()).getEventDesciption());
             SingletonData.getInstance().setChairsInRow(data.get(getAdapterPosition()).getChairsInRow());
+            SingletonData.getInstance().setRows(data.get(getAdapterPosition()).getNumberOfRows());
+            SingletonData.getInstance().setPrice(data.get(getAdapterPosition()).getPrice());
 
 
             Intent intent = new Intent(mContext, EventDetails.class);

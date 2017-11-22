@@ -41,6 +41,8 @@
                 android:gravity="right"
                 android:paddingRight="@dimen/default_margin_bottom"
                 android:text="sdfdsdsdfsdfsfd jhdbshhs"
+                android:textColor="#000"
+                android:textSize="@dimen/largeTextSize"
                 android:textStyle="bold"
                 android:transitionName="text" />
 
@@ -50,8 +52,10 @@
             android:id="@+id/tvServiceDetailsDesciption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_margin_bottom"
+            android:layout_marginBottom="@dimen/margin_large"
             android:text="xcxcxczzzzzzzzzzz"
+            android:textColor="#000"
+            android:textSize="@dimen/textSize"
             android:textStyle="italic" />
 
 

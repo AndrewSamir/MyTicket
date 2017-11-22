@@ -5,5 +5,5 @@ package com.samir.andrew.myticket.utlities;
  */
 
 public enum DataEnum {
-    callGetAllEvents, intentServiceId, callGetEventTimes, intentEventName, intentTime, callGetStageChairs, intentChairsInRow, callGetAllServices
+    callGetAllEvents, intentServiceId, callGetEventTimes, intentEventName, intentTime, callGetStageChairs, intentChairsInRow, callCheckProfile, callAddProfileData, callReserveChairs, callGetMyTickets, callGetAllServices
 }

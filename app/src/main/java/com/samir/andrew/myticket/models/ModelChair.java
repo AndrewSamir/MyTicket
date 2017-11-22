@@ -6,7 +6,7 @@ package com.samir.andrew.myticket.models;
 
 public class ModelChair {
 
-    public String church, mail, mobile, name, paymentMethod, chairKey, reservedBy;
+    public String mobile, name, paymentMethod, chairKey, reservedBy;
     int state;
 
     public ModelChair() {
@@ -28,22 +28,6 @@ public class ModelChair {
 
     public void setChairKey(String chairKey) {
         this.chairKey = chairKey;
-    }
-
-    public String getChurch() {
-        return church;
-    }
-
-    public void setChurch(String church) {
-        this.church = church;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
     }
 
     public String getMobile() {

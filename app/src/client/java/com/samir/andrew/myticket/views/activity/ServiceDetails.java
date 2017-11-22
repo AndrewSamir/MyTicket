@@ -23,6 +23,7 @@ import com.samir.andrew.myticket.R;
 import com.samir.andrew.myticket.adapter.AdapterClientEvents;
 import com.samir.andrew.myticket.interfaces.InterfaceDailogClicked;
 import com.samir.andrew.myticket.interfaces.InterfaceGetDataFromFirebase;
+import com.samir.andrew.myticket.models.ModelChair;
 import com.samir.andrew.myticket.models.ModelEventDetails;
 import com.samir.andrew.myticket.singleton.SingletonData;
 import com.samir.andrew.myticket.utlities.DataEnum;
@@ -139,6 +140,16 @@ public class ServiceDetails extends AppCompatActivity implements InterfaceGetDat
 
         }
 
+
+    }
+
+    @Override
+    public void onGetStageChairs(List<ModelChair> modelChairLists, String flag) {
+
+    }
+
+    @Override
+    public void onChairChanged(ModelChair modelChair, String flag) {
 
     }
 

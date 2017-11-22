@@ -1,11 +1,15 @@
 package com.samir.andrew.myticket.views.activity;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,13 +23,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.samir.andrew.myticket.R;
-import com.sdsmdg.tastytoast.TastyToast;
 
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import developer.mokadim.projectmate.dialog.IndicatorStyle;
+import developer.mokadim.projectmate.dialog.ProgressDialog;
 
 public class Login extends AppCompatActivity {
 
@@ -38,26 +43,38 @@ public class Login extends AppCompatActivity {
 
     @OnClick(R.id.btnLogin)
     public void onClickbtnLogin() {
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                "+201272009155",        // Phone number to verify
-                60,                 // Timeout duration
-                TimeUnit.SECONDS,   // Unit of timeout
-                this,               // Activity (for callback binding)
-                mCallbacks);        // OnVerificationStateChangedCallbacks
+        if (edtLoginPhone.getText().toString().trim().length() != 11) {
+            edtLoginPhone.setError("أدخل رقم هاتف صحيح");
+        } else {
+            progressDialog.show();
+            sendPhoneNumber();
+        }
     }
 
-    @Bind(R.id.edtMobileNumber)
-    EditText edtMobileNumber;
+  /*  @Bind(R.id.edtPhoneNumberClientRegister)
+    PhoneEditText edtPhoneNumberClientRegister;
+*/
 
+    @Bind(R.id.edtLoginPhone)
+    EditText edtLoginPhone;
     @Bind(R.id.edtCode)
     EditText edtCode;
 
+    @Bind(R.id.linearLoginEnterPhoneNumber)
+    LinearLayout linearLoginEnterPhoneNumber;
+
+    @Bind(R.id.linearLoginEnterCode)
+    LinearLayout linearLoginEnterCode;
+
     @OnClick(R.id.btnEnterTheCode)
     public void onClickbtnEnterTheCode() {
+        progressDialog.show();
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, edtCode.getText().toString());
         signInWithPhoneAuthCredential(credential);
 
     }
+
+    Dialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,20 +85,18 @@ public class Login extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        //  edtPhoneNumberClientRegister.setDefaultCountry("EG");
+
+        progressDialog = new ProgressDialog(this, IndicatorStyle.BallZigZag).show();
+        progressDialog.dismiss();
+
         mAuth = FirebaseAuth.getInstance();
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {
-                // This callback will be invoked in two situations:
-                // 1 - Instant verification. In some cases the phone number can be instantly
-                //     verified without needing to send or enter a verification code.
-                // 2 - Auto-retrieval. On some devices Google Play services can automatically
-                //     detect the incoming verification SMS and perform verificaiton without
-                //     user action.
-                Log.d(TAG, "onVerificationCompleted:" + credential);
-                TastyToast.makeText(Login.this, "credential " + credential, TastyToast.LENGTH_SHORT, TastyToast.SUCCESS);
 
+                Log.d(TAG, "onVerificationCompleted:" + credential);
 
                 signInWithPhoneAuthCredential(credential);
             }
@@ -108,12 +123,11 @@ public class Login extends AppCompatActivity {
             @Override
             public void onCodeSent(String verificationId,
                                    PhoneAuthProvider.ForceResendingToken token) {
-                // The SMS verification code has been sent to the provided phone number, we
-                // now need to ask the user to enter the code and then construct a credential
-                // by combining the code with a verification ID.
+                progressDialog.dismiss();
                 Log.d(TAG, "onCodeSent:" + verificationId);
-                TastyToast.makeText(Login.this, "verificationId " + verificationId, TastyToast.LENGTH_SHORT, TastyToast.SUCCESS);
 
+                linearLoginEnterPhoneNumber.setVisibility(View.GONE);
+                linearLoginEnterCode.setVisibility(View.VISIBLE);
                 // Save verification ID and resending token so we can use them later
                 mVerificationId = verificationId;
                 mResendToken = token;
@@ -134,6 +148,8 @@ public class Login extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
 
                             FirebaseUser user = task.getResult().getUser();
+                            progressDialog.dismiss();
+                            startActivity(new Intent(Login.this, Home.class));
                             // ...
                         } else {
                             // Sign in failed, display a message and update the UI
@@ -144,6 +160,17 @@ public class Login extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void sendPhoneNumber() {
+
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                "+2" + edtLoginPhone.getText().toString(),        // Phone number to verify
+                60,                 // Timeout duration
+                TimeUnit.SECONDS,   // Unit of timeout
+                this,               // Activity (for callback binding)
+                mCallbacks);        // OnVerificationStateChangedCallbacks
+
     }
 
 }

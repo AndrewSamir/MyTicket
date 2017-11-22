@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.samir.andrew.myticket.R;
 import com.samir.andrew.myticket.models.ModelChair;
 import com.samir.andrew.myticket.singleton.SingletonData;
@@ -61,7 +62,8 @@ public class AdapterStage extends RecyclerView.Adapter<AdapterStage.ViewHolder> 
         0 -> empty
         1 -> reserved
         2 -> not confirmed
-        3 -> to reserve
+        4 -> to reserve
+        5 -> not a chair
          */
 
 
@@ -72,17 +74,32 @@ public class AdapterStage extends RecyclerView.Adapter<AdapterStage.ViewHolder> 
             holder.cardRvItemStageChair.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorEmpty));
             holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#000000"));
         } else if (data.get(position).getState() == 1) {
-            holder.cardRvItemStageChair.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorReserved));
-            holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#FFFFFF"));
+            if (data.get(position).getReservedBy().equals(FirebaseAuth.getInstance().getUid())) {
+                holder.cardRvItemStageChair.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorMyReservation));
+                holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#FFFFFF"));
+            } else {
+                holder.cardRvItemStageChair.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorReserved));
+                holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#FFFFFF"));
+            }
         } else if (data.get(position).getState() == 2) {
             holder.cardRvItemStageChair.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorNotConfirmed));
             holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#000000"));
         } else if (data.get(position).getState() == 4) {//should be equal auth.
-            holder.cardRvItemStageChair.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorMyReservation));
-            holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#000000"));
-        } else if (data.get(position).getState() == 3) {
+
+
             holder.cardRvItemStageChair.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorToReserve));
             holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#000000"));
+
+        } else if (data.get(position).getState() == 3) {
+            if (data.get(position).getReservedBy().equals(FirebaseAuth.getInstance().getUid())) {
+                holder.cardRvItemStageChair.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorMyReservation));
+                holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#FFFFFF"));
+            } else {
+                holder.cardRvItemStageChair.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorToReserve));
+                holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#000000"));
+            }
+        } else if (data.get(position).getState() == 5) {
+            holder.cardRvItemStageChair.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -122,6 +139,23 @@ public class AdapterStage extends RecyclerView.Adapter<AdapterStage.ViewHolder> 
         notifyItemRangeInserted(startIndex, items.size());
     }
 
+    public void updateNextKey(ModelChair modelChair, String presKey) {
+
+        if (presKey == null) {
+            data.set(0, modelChair);
+            return;
+        }
+        for (int i = 0; i < data.size(); i++) {
+
+            if (data.get(i).getChairKey().equals(presKey)) {
+                data.set(i + 1, modelChair);
+                notifyItemChanged(i + 1);
+                return;
+            }
+
+        }
+    }
+
     public List<ModelChair> getReservedChairs() {
 
         List<ModelChair> toReserveChairs = new ArrayList<>();
@@ -142,12 +176,12 @@ public class AdapterStage extends RecyclerView.Adapter<AdapterStage.ViewHolder> 
         CardView cardRvItemStageChair;
 
         public ViewHolder(View itemView) {
+
             super(itemView);
             itemView.setOnClickListener(this);
             tvRvItemStageChairKey = (TextView) itemView.findViewById(R.id.tvRvItemStageChairKey);
             cardRvItemStageChair = (CardView) itemView.findViewById(R.id.cardRvItemStageChair);
             itemView.setOnClickListener(this);
-
 
         }
 

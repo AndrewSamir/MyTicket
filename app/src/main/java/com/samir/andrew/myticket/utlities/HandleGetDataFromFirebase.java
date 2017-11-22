@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -14,9 +16,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.samir.andrew.myticket.R;
 import com.samir.andrew.myticket.interfaces.InterfaceDailogClicked;
 import com.samir.andrew.myticket.interfaces.InterfaceGetDataFromFirebase;
+import com.samir.andrew.myticket.models.ModelChair;
+import com.samir.andrew.myticket.singleton.SingletonData;
 import com.sdsmdg.tastytoast.TastyToast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import developer.mokadim.projectmate.dialog.IndicatorStyle;
 import developer.mokadim.projectmate.dialog.ProgressDialog;
@@ -59,7 +64,7 @@ public class HandleGetDataFromFirebase {
     public void callGetAllServices(final String flag) {
         final Dialog progressDialog = new ProgressDialog(context, IndicatorStyle.BallZigZag).show();
         progressDialog.show();
-        if (true) {
+        if (isOnline()) {
             DatabaseReference myRefJobs = myRef.child(context.getString(R.string.firebase_services));
             myRefJobs.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -83,7 +88,7 @@ public class HandleGetDataFromFirebase {
     public void callGetAllEvents(final String flag, final String serviceID) {
         final Dialog progressDialog = new ProgressDialog(context, IndicatorStyle.BallBeat).show();
         progressDialog.show();
-        if (true) {
+        if (isOnline()) {
             DatabaseReference myRefJobs = myRef.child(context.getString(R.string.firebase_services))
                     .child(serviceID)
                     .child(context.getString(R.string.firebase_events));
@@ -106,6 +111,56 @@ public class HandleGetDataFromFirebase {
         }
     }
 
+    public void callGetMyTickets(final String flag) {
+        final Dialog progressDialog = new ProgressDialog(context, IndicatorStyle.BallBeat).show();
+        progressDialog.show();
+        if (isOnline()) {
+            DatabaseReference myRefJobs = myRef.child("users")
+                    .child(FirebaseAuth.getInstance().getUid())
+                    .child("tickets");
+            myRefJobs.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    clickListener.onGetDataFromFirebase(dataSnapshot, flag);
+                    progressDialog.dismiss();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    TastyToast.makeText(context, context.getString(R.string.connection_error), TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                    progressDialog.dismiss();
+                }
+            });
+        } else {
+            TastyToast.makeText(context, context.getString(R.string.connection_error), TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+            progressDialog.dismiss();
+        }
+    }
+
+    public void callCheckProfileData(final String flag) {
+        final Dialog progressDialog = new ProgressDialog(context, IndicatorStyle.BallBeat).show();
+        progressDialog.show();
+        if (isOnline()) {
+            DatabaseReference myRefJobs = myRef.child("users")
+                    .child(FirebaseAuth.getInstance().getUid());
+            myRefJobs.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    clickListener.onGetDataFromFirebase(dataSnapshot, flag);
+                    progressDialog.dismiss();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    TastyToast.makeText(context, context.getString(R.string.connection_error), TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                    progressDialog.dismiss();
+                }
+            });
+        } else {
+            TastyToast.makeText(context, context.getString(R.string.connection_error), TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+            progressDialog.dismiss();
+        }
+    }
 
     public void callGetEventTimes(final String flag, final String serviceId, final String eventName, final int chairsInRow) {
         final Dialog progressDialog = new ProgressDialog(context, IndicatorStyle.BallBeat).show();
@@ -149,14 +204,14 @@ public class HandleGetDataFromFirebase {
     public void callGetStageChairs(final String flag, String serviceId, String eventName, String time) {
         final Dialog progressDialog = new ProgressDialog(context, IndicatorStyle.BallBeat).show();
         progressDialog.show();
-        if (true) {
+        if (isOnline()) {
             DatabaseReference myRefJobs = myRef.child(context.getString(R.string.firebase_services))
                     .child(serviceId)
                     .child(context.getString(R.string.firebase_events))
                     .child(eventName)
                     .child(context.getString(R.string.firebase_times))
                     .child(time);
-            myRefJobs.addValueEventListener(new ValueEventListener() {
+           /* myRefJobs.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     clickListener.onGetDataFromFirebase(dataSnapshot, flag);
@@ -168,7 +223,46 @@ public class HandleGetDataFromFirebase {
                     TastyToast.makeText(context, context.getString(R.string.connection_error), TastyToast.LENGTH_SHORT, TastyToast.ERROR);
                     progressDialog.dismiss();
                 }
+            });*/
+
+            final int numberOfChairs = SingletonData.getInstance().getChairsInRow() * SingletonData.getInstance().getRows();
+            final List<ModelChair> modelChairList = new ArrayList<>();
+            myRefJobs.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                    ModelChair modelChair = dataSnapshot.getValue(ModelChair.class);
+                    modelChairList.add(modelChair);
+                    if (modelChairList.size() == numberOfChairs) {
+                        clickListener.onGetStageChairs(modelChairList, flag);
+                        progressDialog.dismiss();
+                    }
+
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    ModelChair modelChair = dataSnapshot.getValue(ModelChair.class);
+                    clickListener.onChairChanged(modelChair,s);
+
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
             });
+
         } else {
             TastyToast.makeText(context, context.getString(R.string.connection_error), TastyToast.LENGTH_SHORT, TastyToast.ERROR);
             progressDialog.dismiss();

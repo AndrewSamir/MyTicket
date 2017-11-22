@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/viewHeight"
+    android:layoutDirection="rtl"
+    android:orientation="horizontal"
+    android:weightSum="5">
+
+
+    <EditText
+        android:id="@+id/edtPhoneNumberRegister"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/viewHeight"
+        android:layout_marginBottom="@dimen/default_margin_bottom"
+        android:layout_weight="4"
+        android:background="@drawable/dropdown_background"
+        android:drawablePadding="@dimen/_7sdp"
+        android:drawableRight="@drawable/ic_action_phone_android"
+        android:drawableTint="@color/colorPrimaryDark"
+        android:hint="@string/phone_number_hint"
+        android:inputType="phone"
+        android:padding="@dimen/_5sdp"
+        android:tag="com_lamudi_phonefield_edittext"
+        android:textDirection="locale"
+        android:textSize="@dimen/textSize" />
+
+    <Spinner
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_weight="1"
+        android:dropDownWidth="@dimen/viewHeight"
+        android:gravity="center"
+        android:popupBackground="@color/colorWhite"
+        android:tag="com_lamudi_phonefield_flag_spinner" />
+
+
+</LinearLayout>

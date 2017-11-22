@@ -9,7 +9,7 @@ public class SingletonData {
     private static SingletonData mInstance = null;
 
     private String serviceId, eventName, eventTime, serviceImage, eventImage, serviceName, serviceDescription,eventDescription;
-    private int chairsInRow;
+    private int chairsInRow,Rows,price;
 
     private SingletonData() {
     }
@@ -27,6 +27,22 @@ public class SingletonData {
 
     public static void setmInstance(SingletonData mInstance) {
         SingletonData.mInstance = mInstance;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getRows() {
+        return Rows;
+    }
+
+    public void setRows(int rows) {
+        Rows = rows;
     }
 
     public String getEventDescription() {

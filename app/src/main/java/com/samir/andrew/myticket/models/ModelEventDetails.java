@@ -7,10 +7,18 @@ package com.samir.andrew.myticket.models;
 public class ModelEventDetails {
 
     public String eventDesciption, eventImage, eventName, serviceId;
-    public int chairsInRow, numberOfRows;
+    public int chairsInRow, numberOfRows,price;
 
     public ModelEventDetails() {
         serviceId = "e";
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public String getEventDesciption() {

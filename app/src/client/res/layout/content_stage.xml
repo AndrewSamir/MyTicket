@@ -14,13 +14,130 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layoutDirection="rtl"
+            android:orientation="horizontal"
+            android:padding="@dimen/_5sdp">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_2sdp"
+                app:cardBackgroundColor="@color/colorEmpty"
+                android:paddingLeft="@dimen/_5sdp"
+                app:cardCornerRadius="@dimen/_5sdp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:padding="@dimen/_7sdp"
+                    android:text="A" />
+
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_15sdp"
+
+                android:text="متوفر" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_2sdp"
+                app:cardBackgroundColor="@color/colorReserved"
+                android:paddingLeft="@dimen/_5sdp"
+                app:cardCornerRadius="@dimen/_5sdp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:textColor="@color/colorWhite"
+                    android:padding="@dimen/_7sdp"
+                    android:text="A" />
+
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_15sdp"
+
+                android:text=" غير متوفر" />
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_2sdp"
+                app:cardBackgroundColor="@color/colorMyReservation"
+                android:paddingLeft="@dimen/_5sdp"
+                app:cardCornerRadius="@dimen/_5sdp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:textColor="@color/colorWhite"
+                    android:padding="@dimen/_7sdp"
+                    android:text="A" />
+
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_15sdp"
+
+                android:text="حجوزاتى" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_2sdp"
+                app:cardBackgroundColor="@color/colorNotConfirmed"
+                android:paddingLeft="@dimen/_5sdp"
+                app:cardCornerRadius="@dimen/_5sdp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:padding="@dimen/_7sdp"
+                    android:text="A" />
+
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_15sdp"
+
+                android:text=" غير متوفر و لكن قد يتوفر خلال 24 ساعه" />
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/tvStage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/stage_background"
             android:gravity="center"
-            android:padding="@dimen/_25sdp"
+            android:padding="@dimen/_20sdp"
             android:text="@string/the_stage"
             android:textColor="#000"
             android:textSize="@dimen/largeTextSize"

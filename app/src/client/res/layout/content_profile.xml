@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/default_padding"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.samir.andrew.myticket.views.activity.Profile"
+    tools:showIn="@layout/activity_profile">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="تأكد من كتابة الاسم كما هو كتوب فى اثبات الشخصيه و إلا يعتبر الحجز لاغي"
+            android:textColor="#000"
+            android:textSize="@dimen/textSize"
+            android:padding="@dimen/_5sdp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/edtProfileName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edit_text_background_white"
+            android:hint="@string/name"
+            android:inputType="textPersonName"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp" />
+
+        <EditText
+            android:id="@+id/edtProfileEmail"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edit_text_background_white"
+            android:ems="10"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp" />
+
+        <EditText
+            android:id="@+id/edtProfileChurch"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edit_text_background_white"
+            android:hint="@string/church"
+            android:inputType="textPersonName"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tvProfileBirthdate"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edit_text_background_white"
+            android:gravity="center_vertical"
+            android:hint="@string/birthdate"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/button_background_login"
+            android:elevation="40dp"
+            android:text="@string/save"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</ScrollView>
