@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "430059909629-a7sf9b8vb4scr8uf3lqggmj13da5rjuj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.samir.andrew.myticket",
+            "certificate_hash": "5b12dfffd9829e3571a3461807aab806d05b4f82"
+          }
+        },
+        {
           "client_id": "430059909629-oj5magf4ltko0gtdelk8h9d55hhh5u2a.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -58,6 +66,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "430059909629-2h9gicnoro0fv9jbdn82j4efuagafjvc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.samir.andrew.myticket.client",
+            "certificate_hash": "5b12dfffd9829e3571a3461807aab806d05b4f82"
+          }
+        },
         {
           "client_id": "430059909629-eptbl7c534k3knon2p9b4prq5s1i83fe.apps.googleusercontent.com",
           "client_type": 1,

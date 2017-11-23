@@ -1,6 +1,7 @@
 package com.samir.andrew.myticket.adapter;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
@@ -10,14 +11,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.samir.andrew.myticket.R;
+import com.samir.andrew.myticket.interfaces.InterfaceAddDataToFirebase;
 import com.samir.andrew.myticket.models.ModelChair;
 import com.samir.andrew.myticket.singleton.SingletonData;
 import com.samir.andrew.myticket.utlities.DataEnum;
+import com.samir.andrew.myticket.utlities.HandleAddDataToFirebase;
 import com.samir.andrew.myticket.utlities.HandleGetDataFromFirebase;
 import com.sdsmdg.tastytoast.TastyToast;
 
@@ -29,7 +34,7 @@ import me.grantland.widget.AutofitHelper;
 /**
  * Created by lenovo on 5/3/2016.
  */
-public class AdapterStage extends RecyclerView.Adapter<AdapterStage.ViewHolder> {
+public class AdapterStage extends RecyclerView.Adapter<AdapterStage.ViewHolder> implements InterfaceAddDataToFirebase {
 
 
     public List<ModelChair> data;
@@ -43,6 +48,8 @@ public class AdapterStage extends RecyclerView.Adapter<AdapterStage.ViewHolder> 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         mContext.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         width = displayMetrics.widthPixels;
+
+        HandleAddDataToFirebase.getInstance(mContext).setClickDialogListener(this);
     }
 
 
@@ -84,6 +91,15 @@ public class AdapterStage extends RecyclerView.Adapter<AdapterStage.ViewHolder> 
         } else if (data.get(position).getState() == 2) {
             holder.cardRvItemStageChair.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorNotConfirmed));
             holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#000000"));
+
+          /*  if (data.get(position).getPaymentMethod().equals("cash")) {
+                holder.cardRvItemStageChair.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimaryDark));
+                holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#FFFFFF"));
+            } else {
+                holder.cardRvItemStageChair.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorNotConfirmed));
+                holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#000000"));
+
+            }*/
         } else if (data.get(position).getState() == 4) {//should be equal auth.
 
 
@@ -98,6 +114,8 @@ public class AdapterStage extends RecyclerView.Adapter<AdapterStage.ViewHolder> 
                 holder.cardRvItemStageChair.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorToReserve));
                 holder.tvRvItemStageChairKey.setTextColor(Color.parseColor("#000000"));
             }
+
+
         } else if (data.get(position).getState() == 5) {
             holder.cardRvItemStageChair.setVisibility(View.INVISIBLE);
         }
@@ -170,6 +188,21 @@ public class AdapterStage extends RecyclerView.Adapter<AdapterStage.ViewHolder> 
 
     }
 
+    @Override
+    public void onDataAddedSuccess(String flag) {
+
+    }
+
+    @Override
+    public void onDataAddedFailed(String flag) {
+
+    }
+
+    @Override
+    public void onDataAddedRepeated(String flag) {
+
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tvRvItemStageChairKey;
@@ -197,8 +230,92 @@ public class AdapterStage extends RecyclerView.Adapter<AdapterStage.ViewHolder> 
                 notifyItemChanged(getAdapterPosition());
             }
 
+           /* ModelChair chair = data.get(getAdapterPosition());
+            showCustomDialog(chair, chair.getState() + "", getAdapterPosition());
+*/
+
         }
+    }
+
+    private void showCustomDialog(final ModelChair modelChair, final String flag, final int pos) {
+
+        final Dialog dialog = new Dialog(mContext);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dialog_admin_reserve);
+
+        final TextView tvRvItemMyTicketName = (TextView) dialog.findViewById(R.id.tvRvItemMyTicketName);
+        TextView tvRvItemMyTicketMobile = (TextView) dialog.findViewById(R.id.tvRvItemMyTicketMobile);
+        final TextView tvRvItemMyTicketMyChair = (TextView) dialog.findViewById(R.id.tvRvItemMyTicketMyChair);
+        final TextView tvRvItemMyTicketPaymentMethod = (TextView) dialog.findViewById(R.id.tvRvItemMyTicketPaymentMethod);
+        final TextView tvRvItemMyTicketState = (TextView) dialog.findViewById(R.id.tvRvItemMyTicketState);
+        Button btnConfirm = (Button) dialog.findViewById(R.id.btnConfirm);
+        final Button btnCancel = (Button) dialog.findViewById(R.id.btnCancel);
+
+        tvRvItemMyTicketName.setText(modelChair.getName());
+        tvRvItemMyTicketMobile.setText(modelChair.getMobile());
+        tvRvItemMyTicketMyChair.setText(modelChair.getChairKey());
+        tvRvItemMyTicketPaymentMethod.setText(modelChair.getPaymentMethod());
+
+        final List<ModelChair> modelChairs = new ArrayList<>();
+        final List<String> chairs = new ArrayList<>();
+
+        if (flag.equals("0")) {
+            btnCancel.setVisibility(View.GONE);
+
+        } else if (flag.equals("1")) {
+            btnConfirm.setVisibility(View.GONE);
+        }
+        // tvRvItemMyTicketState.setText(modelChair);
+
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (flag.equals("0")) {
+                    modelChair.setPaymentMethod("cash");
+                    modelChair.setReservedBy(FirebaseAuth.getInstance().getUid());
+                    modelChair.setName("ADMIN");
+                    modelChair.setMobile("00");
+                    modelChair.setState(1);
+                    modelChairs.add(modelChair);
+                    chairs.add(modelChair.getChairKey());
+                    HandleAddDataToFirebase.getInstance(mContext).callReserveChairs("flag", modelChairs, chairs);
+
+                } else if (flag.equals("2")) {
+                    modelChair.setState(1);
+                    modelChairs.add(modelChair);
+                    chairs.add(modelChair.getChairKey());
+                    HandleAddDataToFirebase.getInstance(mContext).callReserveChairs("flag", modelChairs, chairs);
+
+                }
+                notifyItemChanged(pos);
+                dialog.dismiss();
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                modelChair.setPaymentMethod("cash");
+                modelChair.setReservedBy(FirebaseAuth.getInstance().getUid());
+                modelChair.setName("ADMIN");
+                modelChair.setMobile("00");
+                modelChair.setState(0);
+                modelChairs.add(modelChair);
+                chairs.add(modelChair.getChairKey());
+                HandleAddDataToFirebase.getInstance(mContext).callReserveChairs("flag", modelChairs, chairs);
+
+
+                notifyItemChanged(pos);
+
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
 
 
     }
+
 }

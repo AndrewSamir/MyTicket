@@ -21,6 +21,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import developer.mokadim.projectmate.SharedPrefUtil;
 
 public class Profile extends AppCompatActivity implements InterfaceAddDataToFirebase, InterfaceGetDataFromFirebase {
 
@@ -101,6 +102,7 @@ public class Profile extends AppCompatActivity implements InterfaceAddDataToFire
     @Override
     public void onDataAddedSuccess(String flag) {
         if (flag.equals(DataEnum.callAddProfileData.name())) {
+            SharedPrefUtil.getInstance(Profile.this).write("name", edtProfileName.getText().toString().trim());
             finish();
         }
     }

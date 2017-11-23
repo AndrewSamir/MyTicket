@@ -57,7 +57,7 @@ public class Reservation extends AppCompatActivity implements InterfaceAddDataTo
     public void onClickimgReservationOrangeMoney() {
         showCustomDialog("The ticket is reserved for you for 24 hours You can pay the fees of your ticket by orange money service by your number at the nearest orange store \n" +
                 "The ticket automatically will be confirmed within 24 hours from the time of payment and it will canceled within 24 hours from the time of reservation\n" +
-                "Note : The mobile number that you will pay with orange money must be the same mobile number in the ticket the number is 0122 9184900", "orangeMoney");
+                "Note : The mobile number that you will pay with orange money must be the same mobile number in the ticket the number is 0122 9189151", "orangeMoney");
     }
 
     @OnClick(R.id.imgReservationCash)
